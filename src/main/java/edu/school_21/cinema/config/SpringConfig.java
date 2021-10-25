@@ -1,4 +1,4 @@
-package edu.school_21.cinema.config;//package edu.schx/ool_21.cinema.config;
+package edu.school_21.cinema.config;//package ed  u.schx/ool_21.cinema.config;
 
 import edu.school_21.cinema.repositories.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,13 @@ import javax.sql.DataSource;
 @ComponentScan("edu.school_21.cinema")
 @PropertySource("classpath:application.properties")
 public class SpringConfig {
+
+    private final ApplicationContext applicationContext;
+
+    @Autowired
+    public SpringConfig(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     @Bean
     public DataSource dataSource() {

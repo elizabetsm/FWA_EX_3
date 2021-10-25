@@ -22,14 +22,27 @@ public class SignUpServlet extends HttpServlet {
     private UserDAO userDAO;
 
     @Override
-    public void init(ServletConfig config ) throws ServletException {
+    public void init(ServletConfig config) throws ServletException {
         super.init(config);
         this.userDAO = (UserDAO)config.getServletContext().getAttribute("userDAO");
     }
 
+//    @Override
+//    public void init (ServletConfig config ) throws ServletException {
+//        ServletContext context = config.getServletContext();
+//        ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
+//        this.userDAO = springContext.getBean(UserDAO.class);
+//    }
+
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.service(req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/html/signUp.html").forward(req, resp);
+        System.out.println("Signout-get");
     }
 
     @Override
@@ -39,16 +52,12 @@ public class SignUpServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
+        System.out.println("signout-post");
         userDAO.createUser(firstname, lastname, phoneNum, UpdatableBCrypt.hashPassword(pass));
         System.out.println(UpdatableBCrypt.hashPassword(pass));
         HttpSession session = request.getSession();
         session.setAttribute("name", phoneNum);
         RequestDispatcher rs = request.getRequestDispatcher("/welcome");
         rs.forward(request, response);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/signUp.jsp").forward(req, resp);
     }
 }

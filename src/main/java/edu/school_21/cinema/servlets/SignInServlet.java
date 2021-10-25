@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
 @WebServlet(value = {"/signin"}, name = "SignIn", description = "Sing In")
 public class SignInServlet extends HttpServlet{
 
@@ -38,6 +37,7 @@ public class SignInServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/html/signIn.html").forward(req, resp);
+        System.out.println("signin-get");
 //        RequestDispatcher view = req.getRequestDispatcher("/WEB_INF/logIn.jsp");
 //        view.include(req, resp);
     }
@@ -48,15 +48,16 @@ public class SignInServlet extends HttpServlet{
         response.setContentType("text/html");
         String phoneNum = request.getParameter("phoneNum");
         String pass = request.getParameter("pass");
-        User user = userDAO.readUser(phoneNum);
-
+        System.out.println("point22222");
+        User user = UserDAO.readUser(phoneNum);
+        System.out.println("Point!!!!!1");
         if (user == null){
             request.getRequestDispatcher("/WEB-INF/signIn.html").forward(request, response);
         }
         else if (UpdatableBCrypt.checkPassword(pass, user.getPass())){
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            RequestDispatcher rs = request.getRequestDispatcher("/Welcome");
+            RequestDispatcher rs = request.getRequestDispatcher("/welcome");
             rs.forward(request, response);
         } else {
 //            request.setAttribute("message", "Unknown username/password. Please retry.");

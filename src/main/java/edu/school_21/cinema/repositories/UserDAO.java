@@ -24,7 +24,7 @@ public class UserDAO {
 
     @Autowired
     public UserDAO(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        UserDAO.jdbcTemplate = jdbcTemplate;
     }
 
     public void createUser(String firstname, String lastname, String phoneNum, String pass){

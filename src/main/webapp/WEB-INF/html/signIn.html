@@ -1,14 +1,36 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <title>login form</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form method="POST" action="/signin">-->
+<!--    Phone:<input type="text" name="phoneNum" /><br/>-->
+<!--    Password:<input type="text" name="pass" /><br/>-->
+<!--    <input type="submit" value="log In" />-->
+<!--    <a href="/sign">or sing up</a>-->
+<!--    <h2>BLYA</h2>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>login form</title>
+    <meta charset="UTF-8">
+    <title>signIn</title>
 </head>
 <body>
-<form method="post" action="/welcome">
-    Phone:<input type="text" name="phoneNum" /><br/>
-    Password:<input type="text" name="pass" /><br/>
-    <input type="submit" value="log In" />
-    <a href="/sign">or sing up</a>
+<h1> User Login Form </h1>
+<form method="POST" action="/signin">
+    <div class="container">
+        <label>Username : </label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+        <label>Password : </label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+        <button type="submit">Login</button>
+    </div>
 </form>
 </body>
 </html>

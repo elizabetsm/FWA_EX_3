@@ -23,6 +23,7 @@ public class SuccLogInServlet extends HttpServlet {
         resp.setContentType("text/jsp");
 //        PrintWriter out = resp.getWriter();
         HttpSession session = req.getSession();
+        System.out.println("success-post");
         req.setAttribute("name", session.getAttribute("name"));
         RequestDispatcher dispatcher = getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/welcome.jsp");
