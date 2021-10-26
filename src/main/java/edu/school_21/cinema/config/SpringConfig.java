@@ -1,48 +1,54 @@
 package edu.school_21.cinema.config;//package ed  u.schx/ool_21.cinema.config;
 
-import edu.school_21.cinema.repositories.UserDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import edu.school_21.cinema.repositories.UserDaoImpl;
+import edu.school_21.cinema.services.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 //import org.springframework.web.servlet.DispatcherServlet;
 //import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration.DispatcherServletRegistrationConfiguration
 
 
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
 import javax.sql.DataSource;
 
 //import javax.sql.DataSource;
 //
 @Configuration
 @ComponentScan("edu.school_21.cinema")
-@PropertySource("classpath:application.properties")
+@PropertySource("../application.properties")
 public class SpringConfig {
 
-    private final ApplicationContext applicationContext;
+//    private final ApplicationContext applicationContext;
 
-    @Autowired
-    public SpringConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+//    @Autowired
+//    public SpringConfig(ApplicationContext applicationContext) {
+//        this.applicationContext = applicationContext;
+//    }
+
+    @Value("${datasource.driver}")
+    private String driverClassName;
+    @Value("${datasource.url}")
+    private String url;
+    @Value("${datasource.usrname}")
+    private String userName;
+    @Value("${datasoruce.password}")
+    private String password;
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("datasource.driver");
-        dataSource.setUrl("datasource.url");
-        dataSource.setUsername("datasource.usrname");
-        dataSource.setPassword("datasoruce.password");
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(userName);
+        dataSource.setPassword(password);
 
         return dataSource;
     }
@@ -53,9 +59,19 @@ public class SpringConfig {
     }
 
     @Bean
-    public UserDAO userDaoConfig(){
-        return new UserDAO(jdbcTemplate());
+    public UserService userService(UserDaoImpl userDao, PasswordEncoder passwordEncoder) {
+        return new UserService(userDao, passwordEncoder);
     }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+//    @Bean
+//    public UserDAO userDaoConfig(){
+//        return new UserDAO(jdbcTemplate());
+//    }
 
 //    private ServletRegistration.Dynamic initSpring(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {
 ////        LOGGER.debug("Configuring Spring Web application context");

@@ -16,20 +16,16 @@ import java.io.PrintWriter;
 public class SuccLogInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/html/welcome.html").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/jsp");
-//        PrintWriter out = resp.getWriter();
+        resp.setContentType("text/html");
         HttpSession session = req.getSession();
-        System.out.println("success-post");
-        req.setAttribute("name", session.getAttribute("name"));
+        req.setAttribute("user", session.getAttribute("user"));
         RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher("/WEB-INF/jsp/welcome.jsp");
+                .getRequestDispatcher("/WEB-INF/html/welcome.html");
         dispatcher.forward(req, resp);
-
-//        String user = (String)session.getAttribute("name");
-//        out.println("Hello "+user);
     }
 }
