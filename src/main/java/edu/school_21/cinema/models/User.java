@@ -1,7 +1,5 @@
 package edu.school_21.cinema.models;
 
-import com.sun.rowset.internal.SyncResolverImpl;
-
 public class User {
     private String firstName;
     private String lastName;

@@ -1,31 +1,35 @@
 package edu.school_21.cinema.listeners;
 
-import edu.school_21.cinema.repositories.UserDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import edu.school_21.cinema.config.SpringConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
+@WebListener
 public class MyListener implements ServletContextListener {
-
-
-    private JdbcTemplate jdbcTemplate;
-
-    public MyListener(){}
-    @Autowired
-    public MyListener(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//        ServletContextListener.super.contextInitialized(sce);
-        sce.getServletContext().setAttribute("userDAO", new UserDAO(jdbcTemplate));
+        System.out.println("INIT");
+        ServletContext ctx = sce.getServletContext();
+        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        ctx.setAttribute("springContext", context);
     }
 
+//    private JdbcTemplate jdbcTemplate;
+//
+//    public MyListener(){}
+//    @Autowired
+//    public MyListener(JdbcTemplate jdbcTemplate) {
+//        this.jdbcTemplate = jdbcTemplate;
+//    }
+//
 //    @Override
-//    public void contextDestroyed(ServletContextEvent sce) {
-//        ServletContextListener.super.contextDestroyed(sce);
+//    public void contextInitialized(ServletContextEvent sce) {
+//        sce.getServletContext().setAttribute("userDAO", new UserDAO(jdbcTemplate));
 //    }
 }

@@ -10,7 +10,6 @@
     <title>Hello page</title>
 </head>
 <body>
-<body>
 <a href="/login">login</a>
 </body>
 </html>
