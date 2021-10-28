@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/welcome")
+@WebServlet(value = {"/profile"}, name = "Profile")
 public class SuccLogInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

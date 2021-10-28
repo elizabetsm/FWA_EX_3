@@ -47,10 +47,14 @@ public class SignInServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/html/signIn.html").forward(req, resp);
-        System.out.println("signin-get");
+//        req.getRequestDispatcher("/WEB-INF/html/signIn.html").forward(req, resp);
+//        System.out.println("signin-get");
 //        RequestDispatcher view = req.getRequestDispatcher("/WEB_INF/logIn.jsp");
 //        view.include(req, resp);
+
+        resp.setContentType("text/html");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/html/signIn.html");
+        dispatcher.forward(req, resp);
     }
 
     @Override
@@ -62,7 +66,7 @@ public class SignInServlet extends HttpServlet{
             User user = userService.signIn(userName, password);
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            response.sendRedirect("/welcome");
+            response.sendRedirect("/profile");
         } catch (AuthenticationException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/html/signIn.html");
             dispatcher.forward(request, response);
