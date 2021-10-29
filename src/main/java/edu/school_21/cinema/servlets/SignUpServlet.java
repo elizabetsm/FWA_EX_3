@@ -58,7 +58,7 @@ public class SignUpServlet extends HttpServlet {
             userService.saveUser(user);
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            response.sendRedirect("/welcome");
+            response.sendRedirect("/profile");
         } catch (AuthenticationException e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/html/signUp.html");
             dispatcher.forward(request, response);
