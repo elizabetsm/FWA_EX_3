@@ -1,10 +1,19 @@
 package edu.school_21.cinema.models;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String pass;
+    private List<File> listOfImages = new ArrayList<>();
+
+    {
+        listOfImages.add(new File("/Users/lizka/Desktop/FWA_EX_3/261046917.jpg" ));
+    }
 
     public User(){}
 
@@ -14,6 +23,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.pass = pass;
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -45,5 +55,9 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public List<File> getListOfImages(){
+        return listOfImages;
     }
 }
