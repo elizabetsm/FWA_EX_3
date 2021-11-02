@@ -1,4 +1,13 @@
-<%@ page import="edu.school_21.cinema.models.User" %><%--
+<%@ page import="edu.school_21.cinema.models.User" %>
+<%@ page import="edu.school_21.cinema.models.Auth" %>
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.nio.file.Files" %>
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.util.stream.Stream" %>
+<%@ page import="java.nio.file.Paths" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: lizka
   Date: 14.10.2021
@@ -13,18 +22,76 @@
 </head>
 <body>
 <% User user = (User)request.getSession().getAttribute("user");%>
+<% File pathToPic = (File)session.getAttribute("pathImages");%>
 <%--<div class="col-sm-6 col-md-4">--%>
-    <img src="data:image/jpg;<%=user.getListOfImages().get(0)%>" height="1080px" width="1920px" />
+<%--    <img src="data:image/jpg;<%=user.getListOfImages().get(0)%>" height="1080px" width="1920px" />--%>
+<% String image = "CatKittyCat.jpg";%>
+<%--    <img src="<%=image%>" height="1280px" width="960px"/>--%>
 <%--</div>--%>
-<%--<div class="col-sm-6 col-md-8">--%>
-    <h4><%=user.getFirstName()%></h4>
-<%--    <small><cite title="San Francisco, USA">San Francisco, USA <i class="glyphicon glyphicon-map-marker">--%>
-<%--    </i></cite></small>--%>
-<%--<h2>Welcome</h2>--%>
-<%--<a>Its me</a><br/>--%>
-<%--<% User user = (User)request.getSession().getAttribute("user");%>--%>
-<%--<%=user.getFirstName()%>--%>
-<%--<br/>--%>
-<%--<img src="<%=user.getListOfImages().get(0)%>">--%>
+<table width="50%" border="1">
+    <thead>
+    <tr>
+        <td>Date</td>
+        <td>Time</td>
+        <td>IP</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% for (Auth auth :user.getListOfAuths()) {%>
+    <tr>
+    <td><%=auth.getAuthDate()%></td>
+    <td><%=auth.getAuth_time()%></td>
+    <td><%=auth.getIp()%></td>
+    </tr>
+    <%}%>
+
+    <br>
+    </tbody>
+</table>
+
+<form enctype="multipart/form-data" action="/profile" method="post">
+
+    <input type="file" name="file" size="100" />
+    <input type="submit" value="Upload new Pic" />
+    <br />
+
+</form>
+</body>
+
+<% List<File> list = new ArrayList<>();
+    System.out.println("Session = " + pathToPic);
+if (session.getAttribute("pathImages") != null){
+    try (Stream<Path> paths = Files.walk(pathToPic.toPath())) {
+        paths
+                .map(file -> new File(String.valueOf(file)))
+                .forEach(list::add);
+    }
+}
+
+    System.out.println(list);%>
+<table width="50%" border="1">
+    <thead>
+    <tr>
+        <td>File name</td>
+        <td>Size</td>
+        <td>MIME</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% if (list != null) { %>
+    <% for (File file : list) {%>
+    <tr>
+        <td><a href="<%=file.getName()%>"><%=file.getName()%></a></td>
+        <td><%=file.getUsableSpace()%></td>
+        <td><%=file.getCanonicalFile()%></td>
+    </tr>
+    <%}%>
+    <%}%>
+
+    <br>
+    </tbody>
+</table>
 </body>
 </html>
