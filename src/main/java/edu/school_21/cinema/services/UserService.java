@@ -16,7 +16,7 @@ public class UserService {
     }
 
     public void saveUser(User user) throws AuthenticationException {
-        if (userDao.getByPhoneNum(user.getPhoneNumber()) == null) {
+        if (userDao.getUser(user.getPhoneNumber()) == null) {
             user.setPass(passwordEncoder.encode(user.getPass()));
             userDao.createUser(user);
         } else {
@@ -24,11 +24,17 @@ public class UserService {
         }
     }
 
+    public void updateUser(User user) {
+        userDao.saveAttribute(user);
+    }
+
     public User signIn(String phoneNum, String password) throws AuthenticationException {
         User user = userDao.getByPhoneNum(phoneNum);
+        CharSequence tmp = (CharSequence) user.getPass();
+        String ps = passwordEncoder.encode(tmp);
         if (user == null) {
             throw new AuthenticationException("user not found");
-        } else if (passwordEncoder.matches(password, user.getPass())) {
+        } else if (passwordEncoder.matches(password, ps)) {
             return user;
         } else {
             throw new AuthenticationException("password incorrect");
@@ -36,6 +42,6 @@ public class UserService {
     }
 
     public User getUserByPhoneNum(String phoneNum) {
-        return userDao.getByPhoneNum(phoneNum);
+        return userDao.getUser(phoneNum);
     }
 }
