@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     private UserExtractor userExtractor;
-    private final String SQL_QUERY = "SELECT * FROM users LEFT JOIN signmodel s on users.id = s.user_id WHERE phone_number='2'";
+    private final String SQL_QUERY = "SELECT * FROM users LEFT JOIN signmodel s on users.id = s.user_id WHERE phone_number=?";
 
     @Autowired
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getByPhoneNum(String phoneNum) {
-        return jdbcTemplate.query(SQL_QUERY, userExtractor);
+        return jdbcTemplate.query(SQL_QUERY, userExtractor, phoneNum);
     }
 
     @Override

@@ -30,13 +30,12 @@ public class UserService {
 
     public User signIn(String phoneNum, String password) throws AuthenticationException {
         User user = userDao.getByPhoneNum(phoneNum);
-        CharSequence tmp = (CharSequence) user.getPass();
-        String ps = passwordEncoder.encode(tmp);
         if (user == null) {
             throw new AuthenticationException("user not found");
-        } else if (passwordEncoder.matches(password, ps)) {
+        } else if (passwordEncoder.matches(password, user.getPass())) {
             return user;
         } else {
+            System.out.println("Exeption!! password not match");
             throw new AuthenticationException("password incorrect");
         }
     }
