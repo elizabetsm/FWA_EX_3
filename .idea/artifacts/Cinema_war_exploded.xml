@@ -69,6 +69,7 @@
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.eclipse.sisu:org.eclipse.sisu.inject:0.0.0.M2a" />
           <element id="library" level="project" name="Maven: asm:asm:3.3.1" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.22" />
         </element>
       </element>
       <element id="directory" name="META-INF">

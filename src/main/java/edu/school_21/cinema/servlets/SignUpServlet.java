@@ -1,5 +1,6 @@
 package edu.school_21.cinema.servlets;
 
+import edu.school_21.cinema.models.SignModel;
 import edu.school_21.cinema.models.User;
 import edu.school_21.cinema.repositories.UpdatableBCrypt;
 import edu.school_21.cinema.repositories.UserDaoImpl;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(value = "/signup", name = "SignUp", description = "Sing")
@@ -47,15 +49,20 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
         response.setContentType("text/html");
         String firstName = request.getParameter("firstname");
         String password = request.getParameter("pass");
         String lastName = request.getParameter("lastname");
         String phoneNum = request.getParameter("phoneNum");
         try {
+//            SignModel signModel = new SignModel(request.getRemoteAddr());
+            List<SignModel> list = new ArrayList<>();
+            list.add(new SignModel(request.getRemoteAddr()));
             User user = new User(firstName, lastName, phoneNum, password);
             userService.saveUser(user);
+            user = userService.getUserByPhoneNum(phoneNum);
+            user.setSignModels(list);
+            userService.updateUser(user);
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             response.sendRedirect("/profile");
@@ -63,18 +70,5 @@ public class SignUpServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/html/signUp.html");
             dispatcher.forward(request, response);
         }
-
-//        response.setContentType("text/html");
-//        String phoneNum = request.getParameter("phoneNum");
-//        String pass = request.getParameter("pass");
-//        String firstname = request.getParameter("firstname");
-//        String lastname = request.getParameter("lastname");
-//        System.out.println("signout-post");
-//        userDaoImpl.createUser(firstname, lastname, phoneNum, UpdatableBCrypt.hashPassword(pass));
-//        System.out.println(UpdatableBCrypt.hashPassword(pass));
-//        HttpSession session = request.getSession();
-//        session.setAttribute("name", phoneNum);
-//        RequestDispatcher rs = request.getRequestDispatcher("/welcome");
-//        rs.forward(request, response);
     }
 }

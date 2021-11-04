@@ -1,21 +1,25 @@
 package edu.school_21.cinema.models;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private int ID;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String pass;
-    private List<File> listOfImages = new ArrayList<>();
-
-    {
-        listOfImages.add(new File("/Users/lizka/Desktop/FWA_EX_3/261046917.jpg" ));
-    }
+    private List<SignModel> signModels = new ArrayList<>();
 
     public User(){}
+
+    public User(String firstName, String lastName, String phoneNumber, String pass, List<SignModel> signModels) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.pass = pass;
+        this.signModels = signModels;
+    }
 
     public User(String firstName, String lastName, String phoneNumber, String pass) {
         this.firstName = firstName;
@@ -23,7 +27,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.pass = pass;
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -57,7 +60,19 @@ public class User {
         this.pass = pass;
     }
 
-    public List<File> getListOfImages(){
-        return listOfImages;
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public List<SignModel> getSignModels() {
+        return signModels;
+    }
+
+    public void setSignModels(List<SignModel> signModels) {
+        this.signModels = signModels;
     }
 }

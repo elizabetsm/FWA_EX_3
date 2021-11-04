@@ -16,12 +16,16 @@ public class UserService {
     }
 
     public void saveUser(User user) throws AuthenticationException {
-        if (userDao.getByPhoneNum(user.getPhoneNumber()) == null) {
+        if (userDao.getUser(user.getPhoneNumber()) == null) {
             user.setPass(passwordEncoder.encode(user.getPass()));
             userDao.createUser(user);
         } else {
             throw new AuthenticationException();
         }
+    }
+
+    public void updateUser(User user) {
+        userDao.saveAttribute(user);
     }
 
     public User signIn(String phoneNum, String password) throws AuthenticationException {
@@ -31,11 +35,12 @@ public class UserService {
         } else if (passwordEncoder.matches(password, user.getPass())) {
             return user;
         } else {
+            System.out.println("Exeption!! password not match");
             throw new AuthenticationException("password incorrect");
         }
     }
 
     public User getUserByPhoneNum(String phoneNum) {
-        return userDao.getByPhoneNum(phoneNum);
+        return userDao.getUser(phoneNum);
     }
 }
