@@ -1,12 +1,9 @@
 <%@ page import="edu.school_21.cinema.models.User" %>
-<%@ page import="edu.school_21.cinema.models.Auth" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.nio.file.Files" %>
 <%@ page import="java.nio.file.Path" %>
-<%@ page import="java.util.stream.Collectors" %>
 <%@ page import="java.util.stream.Stream" %>
-<%@ page import="java.nio.file.Paths" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="edu.school_21.cinema.models.SignModel" %><%--
   Created by IntelliJ IDEA.
@@ -64,9 +61,7 @@ if (pathToPic != null){
                 .map(file -> new File(String.valueOf(file)))
                 .forEach(list::add);
     }
-}
-
-    System.out.println(list);%>
+}%>
 <table width="50%" border="1">
     <thead>
     <tr>
@@ -80,9 +75,9 @@ if (pathToPic != null){
     <% if (list != null) { %>
     <% for (File file : list) {%>
     <tr>
-        <td><a href="<%=file.getName()%>"><%=file.getName()%></a></td>
-        <td><%=file.getUsableSpace()%></td>
-        <td><%=file.getCanonicalFile()%></td>
+        <td><a href="images/<%=file.getName()%>"><%=file.getName()%></a></td>
+        <td><%=file.length()%></td>
+        <td><%=Files.probeContentType(file.toPath())%></td>
     </tr>
     <%}%>
     <%}%>
