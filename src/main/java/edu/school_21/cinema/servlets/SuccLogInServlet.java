@@ -2,8 +2,11 @@ package edu.school_21.cinema.servlets;
 
 
 import edu.school_21.cinema.models.User;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,14 +21,24 @@ import java.io.IOException;
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
 public class SuccLogInServlet extends HttpServlet {
+
+    public SuccLogInServlet(){}
+
+    private String pathToPicture = null;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException{
+        ServletContext context = config.getServletContext();
+        ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
+        pathToPicture = (String) springContext.getBean("pathToPic");
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user  = (User)session.getAttribute("user");
-        File pathToPic = new File("/Users/lizka/Desktop/FWA_EX_3/" + user.getPhoneNumber());
+        File pathToPic = new File(pathToPicture + user.getPhoneNumber());
         pathToPic.mkdir();
         req.getSession().setAttribute("pathImages", pathToPic);
-        System.out.println("DO POST ID = "+ req.getSession().getAttribute("pathImages"));
         req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp").forward(req, resp);
     }
 
@@ -35,7 +48,7 @@ public class SuccLogInServlet extends HttpServlet {
         HttpSession session = req.getSession();
         User user  = (User)session.getAttribute("user");
         Part filePart = req.getPart("file");
-        File pathToPic = new File("/Users/lizka/Desktop/FWA_EX_3/" + user.getPhoneNumber());
+        File pathToPic = new File(pathToPicture + user.getPhoneNumber());
         if (filePart != null){
             String fileName = filePart.getSubmittedFileName();
             for (Part part : req.getParts()) {
@@ -43,8 +56,7 @@ public class SuccLogInServlet extends HttpServlet {
             }
         }
         req.getSession().setAttribute("pathImages", pathToPic);
-        RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher("/WEB-INF/jsp/welcome.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp");
         dispatcher.forward(req, resp);
     }
 }
