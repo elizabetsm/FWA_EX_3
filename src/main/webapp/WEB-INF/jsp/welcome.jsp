@@ -5,15 +5,8 @@
 <%@ page import="java.nio.file.Path" %>
 <%@ page import="java.util.stream.Stream" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="edu.school_21.cinema.models.SignModel" %><%--
-  Created by IntelliJ IDEA.
-  User: lizka
-  Date: 14.10.2021
-  Time: 14:06
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="edu.school_21.cinema.models.SignModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ include file="signIn.jsp" %>--%>
 <html>
 <head>
     <title>Profile</title>
@@ -21,10 +14,6 @@
 <body>
 <% User user = (User)request.getSession().getAttribute("user");%>
 <% File pathToPic = (File)session.getAttribute("pathImages");%>
-<%--<div class="col-sm-6 col-md-4">--%>
-<%--    <img src="data:image/jpg;<%=user.getListOfImages().get(0)%>" height="1080px" width="1920px" />--%>
-<%--    <img src="<%=image%>" height="1280px" width="960px"/>--%>
-<%--</div>--%>
 <table width="50%" border="1">
     <thead>
     <tr>
@@ -52,7 +41,7 @@
     <br />
 
 </form>
-</body>
+
 
 <% List<File> list = new ArrayList<>();
     List<File> newList = null;
@@ -63,7 +52,6 @@ if (pathToPic != null){
                 .forEach(list::add);
     }
     newList = list.subList(1, list.size());
-    System.out.println(newList);
 }
 %>
 <table width="50%" border="1">

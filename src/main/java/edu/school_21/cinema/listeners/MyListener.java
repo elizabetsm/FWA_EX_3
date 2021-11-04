@@ -21,17 +21,4 @@ public class MyListener implements ServletContextListener {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         ctx.setAttribute("springContext", context);
     }
-
-//    private JdbcTemplate jdbcTemplate;
-//
-//    public MyListener(){}
-//    @Autowired
-//    public MyListener(JdbcTemplate jdbcTemplate) {
-//        this.jdbcTemplate = jdbcTemplate;
-//    }
-//
-//    @Override
-//    public void contextInitialized(ServletContextEvent sce) {
-//        sce.getServletContext().setAttribute("userDAO", new UserDAO(jdbcTemplate));
-//    }
 }

@@ -61,12 +61,11 @@ public class SignInServlet extends HttpServlet{
         String password = request.getParameter("pass");
         try {
             List<SignModel> list;
-//            list.add(new SignModel(request.getRemoteAddr()));
             User user = userService.signIn(phoneNum, password);
             list = user.getSignModels();
             list.add(new SignModel(request.getRemoteAddr()));
 
-            userService.updateUser(user);                    //TODO исправить косяк с заполнением модли
+            userService.updateUser(user);
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             response.sendRedirect("/profile");

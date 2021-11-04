@@ -38,6 +38,13 @@ public class UserDaoImpl implements UserDao {
                 user.getLastName(),
                 user.getPhoneNumber(),
                 user.getPass());
+//        jdbcTemplate.update("WITH ins1 AS (" +
+//                "insert into users (first_name, last_name, phone_number, password) VALUES(?, ?, ?,?)" +
+//                "returning id as user_id)" +
+//                "insert into list_of_auth(owner_phone, auth_date, auth_time, ip) values (user_id, ?,?,?)",  user.getFirstName(),
+//                user.getLastName(),
+//                user.getPhoneNumber(),
+//                user.getPass());
     }
 
     @Override
@@ -72,6 +79,7 @@ public class UserDaoImpl implements UserDao {
 //
 //        return employees;
 //    }
+
 
 //    public void createUser(String firstname, String lastname, String phoneNum, String pass){
 //        jdbcTemplate.update("insert into users(first_name, last_name, phone_number, password)" +

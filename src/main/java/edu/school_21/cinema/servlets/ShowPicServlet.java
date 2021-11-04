@@ -36,9 +36,7 @@ public class ShowPicServlet extends HttpServlet {
         byte[] fileContent = FileUtils.readFileToByteArray(new File(
                 pathToPicture + user.getPhoneNumber() + req.getPathInfo()));
         String encodedString = Base64.getEncoder().encodeToString(fileContent);
-//        File file = new File(pathToPicture + user.getPhoneNumber() + req.getRequestURI());
         req.getSession().setAttribute("picture", encodedString);
-//        System.out.println(req.getSession().getAttribute("picture"));
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/showPicture.jsp");
         dispatcher.forward(req, resp);
 

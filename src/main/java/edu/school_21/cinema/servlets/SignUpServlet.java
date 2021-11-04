@@ -32,8 +32,6 @@ public class SignUpServlet extends HttpServlet {
         ServletContext context = config.getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.userService = springContext.getBean(UserService.class);
-//        super.init(config);
-//        this.userDaoImpl = (UserDaoImpl)config.getServletContext().getAttribute("userDAO");
     }
 
     @Override
@@ -55,7 +53,6 @@ public class SignUpServlet extends HttpServlet {
         String lastName = request.getParameter("lastname");
         String phoneNum = request.getParameter("phoneNum");
         try {
-//            SignModel signModel = new SignModel(request.getRemoteAddr());
             List<SignModel> list = new ArrayList<>();
             list.add(new SignModel(request.getRemoteAddr()));
             User user = new User(firstName, lastName, phoneNum, password);
