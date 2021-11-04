@@ -7,7 +7,8 @@
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="java.util.stream.Stream" %>
 <%@ page import="java.nio.file.Paths" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="edu.school_21.cinema.models.SignModel" %><%--
   Created by IntelliJ IDEA.
   User: lizka
   Date: 14.10.2021
@@ -25,23 +26,20 @@
 <% File pathToPic = (File)session.getAttribute("pathImages");%>
 <%--<div class="col-sm-6 col-md-4">--%>
 <%--    <img src="data:image/jpg;<%=user.getListOfImages().get(0)%>" height="1080px" width="1920px" />--%>
-<% String image = "CatKittyCat.jpg";%>
 <%--    <img src="<%=image%>" height="1280px" width="960px"/>--%>
 <%--</div>--%>
 <table width="50%" border="1">
     <thead>
     <tr>
-        <td>Date</td>
-        <td>Time</td>
+        <td>Date and time</td>
         <td>IP</td>
     </tr>
     </thead>
     <tbody>
 
-    <% for (Auth auth :user.getListOfAuths()) {%>
+    <% for (SignModel auth :user.getSignModels()) {%>
     <tr>
-    <td><%=auth.getAuthDate()%></td>
-    <td><%=auth.getAuth_time()%></td>
+    <td><%=auth.getDate()%></td>
     <td><%=auth.getIp()%></td>
     </tr>
     <%}%>
@@ -60,8 +58,7 @@
 </body>
 
 <% List<File> list = new ArrayList<>();
-    System.out.println("Session = " + pathToPic);
-if (session.getAttribute("pathImages") != null){
+if (pathToPic != null){
     try (Stream<Path> paths = Files.walk(pathToPic.toPath())) {
         paths
                 .map(file -> new File(String.valueOf(file)))
