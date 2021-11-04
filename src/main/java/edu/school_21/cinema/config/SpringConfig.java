@@ -25,13 +25,6 @@ import javax.sql.DataSource;
 @PropertySource("../application.properties")
 public class SpringConfig {
 
-//    private final ApplicationContext applicationContext;
-
-//    @Autowired
-//    public SpringConfig(ApplicationContext applicationContext) {
-//        this.applicationContext = applicationContext;
-//    }
-
     @Value("${datasource.driver}")
     private String driverClassName;
     @Value("${datasource.url}")
@@ -71,61 +64,7 @@ public class SpringConfig {
     }
 
     @Bean("pathToPic")
-    public String getPathTopic(){return pathTopic;}
-//    @Bean
-//    public UserDAO userDaoConfig(){
-//        return new UserDAO(jdbcTemplate());
-//    }
-
-//    private ServletRegistration.Dynamic initSpring(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {
-////        LOGGER.debug("Configuring Spring Web application context");
-//        AnnotationConfigWebApplicationContext dispatcherServletConfiguration = new AnnotationConfigWebApplicationContext();
-//        dispatcherServletConfiguration.setParent(rootContext);
-//        dispatcherServletConfiguration.register(DispatcherServletConfiguration.class);
-//
-////        LOGGER.debug("Registering Spring MVC Servlet");
-//        ServletRegistration.Dynamic dispatcherServlet = servletContext.addServlet("dispatcher", new DispatcherServlet(dispatcherServletConfiguration));
-//        dispatcherServlet.addMapping("/*");
-//        dispatcherServlet.setMultipartConfig(new MultipartConfigElement((String) null));
-//        dispatcherServlet.setLoadOnStartup(1);
-//        dispatcherServlet.setAsyncSupported(true);
-//
-//        return dispatcherServlet;
-//    }
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/users");
-//        dataSource.setUsername("lizka");
-//        dataSource.setPassword("hidden");
-//
-//        return dataSource;
-//    }
-//
-//    @Bean
-//    public JdbcTemplate jdbcTemplate() {
-//        return new JdbcTemplate(dataSource());
-//    }
-//    private final ApplicationContext applicationContext;
-//
-//    @Autowired
-//    public SpringConfig(ApplicationContext applicationContext) {
-//        this.applicationContext = applicationContext;
+    public String getPathTopic() {
+        return pathTopic;
     }
-//
-//
-//    @Override
-//    public void onStartup(ServletContext servletContext) throws ServletException {
-////        // Load Spring web application configuration
-////        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-////        context.register(AppConfig.class);
-////
-////        // Create and register the DispatcherServlet
-////        DispatcherServlet servlet = new DispatcherServlet(context);
-////        ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);
-////        registration.setLoadOnStartup(1);
-////        registration.addMapping("/app/*");
-//    }
-//
+}

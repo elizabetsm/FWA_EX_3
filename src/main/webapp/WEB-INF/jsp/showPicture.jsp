@@ -11,8 +11,6 @@
     <title>show one picture</title>
 </head>
 <body>
-<%--<%--%>
-<%--    System.out.println(request.getSession().getAttribute("picture"));%>--%>
 <img src="data:image/png;base64,<%=request.getSession().getAttribute("picture")%>" height="800" width="1200">
 </body>
 </html>

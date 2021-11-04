@@ -49,12 +49,13 @@ public class SuccLogInServlet extends HttpServlet {
         User user  = (User)session.getAttribute("user");
         Part filePart = req.getPart("file");
         File pathToPic = new File(pathToPicture + user.getPhoneNumber());
-        if (filePart != null){
-            String fileName = filePart.getSubmittedFileName();
+
+        String fileName = filePart.getSubmittedFileName();
+        try{
             for (Part part : req.getParts()) {
-                part.write(pathToPic + File.separator+ fileName);
-            }
-        }
+                part.write(pathToPic + File.separator + fileName);
+                }
+            } catch (Exception ignored){}
         req.getSession().setAttribute("pathImages", pathToPic);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp");
         dispatcher.forward(req, resp);
