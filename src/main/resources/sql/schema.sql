@@ -12,7 +12,7 @@ CREATE TABLE        users(
 CREATE TABLE        signModel(
     user_id         int NOT NULL,
     ip              varchar(254),
-    date            timestamp,
+    date            varchar(254),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 )
 
