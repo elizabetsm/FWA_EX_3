@@ -1,5 +1,6 @@
 package edu.school_21.cinema.models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,9 @@ public class User {
     private String phoneNumber;
     private String pass;
     private List<SignModel> signModels = new ArrayList<>();
+    private List<File> listOfFiles = new ArrayList<>();
+
+
 
     public User(){}
 
@@ -74,5 +78,13 @@ public class User {
 
     public void setSignModels(List<SignModel> signModels) {
         this.signModels = signModels;
+    }
+
+    public List<File> getListOfFiles() {
+        return listOfFiles;
+    }
+
+    public void setListOfFiles(List<File> listOfFiles) {
+        this.listOfFiles = listOfFiles;
     }
 }
