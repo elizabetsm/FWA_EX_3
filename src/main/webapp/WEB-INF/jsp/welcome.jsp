@@ -55,13 +55,17 @@
 </body>
 
 <% List<File> list = new ArrayList<>();
+    List<File> newList = null;
 if (pathToPic != null){
     try (Stream<Path> paths = Files.walk(pathToPic.toPath())) {
         paths
                 .map(file -> new File(String.valueOf(file)))
                 .forEach(list::add);
     }
-}%>
+    newList = list.subList(1, list.size());
+    System.out.println(newList);
+}
+%>
 <table width="50%" border="1">
     <thead>
     <tr>
@@ -72,8 +76,8 @@ if (pathToPic != null){
     </thead>
     <tbody>
 
-    <% if (list != null) { %>
-    <% for (File file : list) {%>
+    <% if (newList != null) { %>
+    <% for (File file : newList) {%>
     <tr>
         <td><a href="images/<%=file.getName()%>"><%=file.getName()%></a></td>
         <td><%=file.length()%></td>
