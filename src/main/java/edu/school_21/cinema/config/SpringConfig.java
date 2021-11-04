@@ -40,6 +40,8 @@ public class SpringConfig {
     private String userName;
     @Value("${datasoruce.password}")
     private String password;
+    @Value("${storage.path}")
+    private String pathTopic;
 
     @Bean
     public DataSource dataSource() {
@@ -68,6 +70,8 @@ public class SpringConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean("pathToPic")
+    public String getPathTopic(){return pathTopic;}
 //    @Bean
 //    public UserDAO userDaoConfig(){
 //        return new UserDAO(jdbcTemplate());
