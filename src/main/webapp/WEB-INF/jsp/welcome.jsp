@@ -1,4 +1,14 @@
-<%--
+<%@ page import="edu.school_21.cinema.models.User" %>
+<%@ page import="edu.school_21.cinema.models.Auth" %>
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.nio.file.Files" %>
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.util.stream.Stream" %>
+<%@ page import="java.nio.file.Paths" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="edu.school_21.cinema.models.SignModel" %><%--
   Created by IntelliJ IDEA.
   User: lizka
   Date: 14.10.2021
@@ -9,9 +19,76 @@
 <%--<%@ include file="signIn.jsp" %>--%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Profile</title>
 </head>
 <body>
-<h2>Welcome</h2>
+<% User user = (User)request.getSession().getAttribute("user");%>
+<% File pathToPic = (File)session.getAttribute("pathImages");%>
+<%--<div class="col-sm-6 col-md-4">--%>
+<%--    <img src="data:image/jpg;<%=user.getListOfImages().get(0)%>" height="1080px" width="1920px" />--%>
+<%--    <img src="<%=image%>" height="1280px" width="960px"/>--%>
+<%--</div>--%>
+<table width="50%" border="1">
+    <thead>
+    <tr>
+        <td>Date and time</td>
+        <td>IP</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% for (SignModel auth :user.getSignModels()) {%>
+    <tr>
+    <td><%=auth.getDate()%></td>
+    <td><%=auth.getIp()%></td>
+    </tr>
+    <%}%>
+
+    <br>
+    </tbody>
+</table>
+
+<form enctype="multipart/form-data" action="/profile" method="post">
+
+    <input type="file" name="file" size="100" />
+    <input type="submit" value="Upload new Pic" />
+    <br />
+
+</form>
+</body>
+
+<% List<File> list = new ArrayList<>();
+if (pathToPic != null){
+    try (Stream<Path> paths = Files.walk(pathToPic.toPath())) {
+        paths
+                .map(file -> new File(String.valueOf(file)))
+                .forEach(list::add);
+    }
+}
+
+    System.out.println(list);%>
+<table width="50%" border="1">
+    <thead>
+    <tr>
+        <td>File name</td>
+        <td>Size</td>
+        <td>MIME</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% if (list != null) { %>
+    <% for (File file : list) {%>
+    <tr>
+        <td><a href="<%=file.getName()%>"><%=file.getName()%></a></td>
+        <td><%=file.getUsableSpace()%></td>
+        <td><%=file.getCanonicalFile()%></td>
+    </tr>
+    <%}%>
+    <%}%>
+
+    <br>
+    </tbody>
+</table>
 </body>
 </html>
